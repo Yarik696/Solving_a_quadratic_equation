@@ -1,7 +1,7 @@
 ﻿import tkinter as tk
 from tkinter import messagebox
 
-def solve_equation():
+def solve_equation():    #Эта функция, предназначенная для решения квадратных уравнений в форме ax^2 + bx + c = 0, где a, b и c - коэффициенты.
     try:
         a = float(entry_a.get())
         b = float(entry_b.get())
@@ -52,71 +52,71 @@ def solve_equation():
     except ValueError as e:
         messagebox.showerror("Ошибка", str(e))
 
-def validate_entry(entry):
+def validate_entry(entry):    #Эта функция проверяет содержимое текстового поля entry. Если поле пустое или содержит нечисловые символы (кроме точки для десятичного числа), текстовый цвет устанавливается красным; иначе цвет остается черным.
     if entry.get() == '' or not entry.get().replace('.', '', 1).isdigit():
         entry.config(fg="black")
     else:
         entry.config(fg="green")
         
-def validate_entry_content(entry):
+def validate_entry_content(entry):    #Эта функция проверяет, является ли содержимое текстового поля entry пустым. Если да, то рамка вокруг поля подсвечивается красным; в противном случае рамка остается стандартного цвета.
     if not entry.get():
         entry.config(highlightbackground="red")
     else:
         entry.config(highlightbackground="SystemButtonFace")
 
-def change_color(event):
+def change_color(event):    #Эта функция изменяет цвет текста в текстовом поле в соответствии с введенным символом. Если введенный символ является цифрой или точкой, цвет текста остается черным; в противном случае цвет текста меняется на красный.
     if event.char.isdigit():
         event.widget.config(fg="green")
     else:
         event.widget.config(fg="black")
 
-# Створення головного вікна
+# Создание главного окна
 root = tk.Tk()
 root.title("Рішення квадратного рівняння")
 
-# Створення надпису "Решение квадратного уравнения" на синьому фоні
+# Создание надписи «Решение квадратного уравнения» на синем фоне
 title_label = tk.Label(root, text="Решение квадратного уравнения", fg="green", bg="light blue", font=("Arial", 13, "bold"))
 title_label.pack(pady=10)
 
-# Створення фрейму для введення коефіцієнтів a, b та c
+# Создание фрейма для ввода коэффициентов a, b и c
 frame_coefficients = tk.Frame(root)
 frame_coefficients.pack(pady=10)
 
-# Створення елементів для введення коефіцієнтів a, b та c
+# Создание элементов для ввода коэффициентов a, b и c
 entry_a = tk.Entry(frame_coefficients, width=5, bg="light blue")
 entry_a.grid(row=0, column=0, padx=5)
 entry_a.bind('<FocusOut>', lambda e: validate_entry(entry_a))
 entry_a.bind('<KeyRelease>', change_color)
-entry_a.bind('<KeyRelease>', lambda e: validate_entry_content(entry_a)) # Додано обробник для введення
+entry_a.bind('<KeyRelease>', lambda e: validate_entry_content(entry_a)) 
 tk.Label(frame_coefficients, text="x**2+").grid(row=0, column=1, padx=5)
 entry_b = tk.Entry(frame_coefficients, width=5, bg="light blue")
 entry_b.grid(row=0, column=2, padx=5)
 entry_b.bind('<FocusOut>', lambda e: validate_entry(entry_b))
 entry_b.bind('<KeyRelease>', change_color)
-entry_b.bind('<KeyRelease>', lambda e: validate_entry_content(entry_b)) # Додано обробник для введення
+entry_b.bind('<KeyRelease>', lambda e: validate_entry_content(entry_b)) 
 tk.Label(frame_coefficients, text="x+").grid(row=0, column=3, padx=5)
 entry_c = tk.Entry(frame_coefficients, width=5, bg="light blue")
 entry_c.grid(row=0, column=4, padx=5)
 entry_c.bind('<FocusOut>', lambda e: validate_entry(entry_c))
 entry_c.bind('<KeyRelease>', change_color)
-entry_c.bind('<KeyRelease>', lambda e: validate_entry_content(entry_c)) # Додано обробник для введення
+entry_c.bind('<KeyRelease>', lambda e: validate_entry_content(entry_c)) 
 
-# Створення кнопки для отримання рішення
+# Создание кнопки для получения решения
 button_solve = tk.Button(frame_coefficients, text="Решить", command=solve_equation, bg="green", fg="black", padx=10, pady=5)
 button_solve.grid(row=0, column=5, padx=(0, 10), ipadx=10)  # Відступ від правого краю
 
-# Створення фрейму для виведення результату
+# Создание фрейма для вывода результата
 result_frame = tk.Frame(root, bg="yellow")
 result_frame.pack(pady=(0, 10), padx=(50, 50), fill=tk.X)  # Зміна параметрів для розташування внизу з відступами від лівого і правого країв
 
-# Етикет для виведення дискрімінанту
+# Этикет для вывода дискриминанта
 disc_label = tk.Label(result_frame, text="", fg="black", font=("Arial", 12), bg="yellow")
 disc_label.pack(pady=5)
 
-# Створення етикету для виведення результату
+# Создание этикета для вывода результата
 solution_text = tk.StringVar()
 result_label = tk.Label(result_frame, textvariable=solution_text, fg="black", font=("Arial", 12), bg="yellow")
 result_label.pack()
 
-# Запуск головного циклу програми
+# Запуск главного цикла программы
 root.mainloop()
